@@ -10,7 +10,7 @@ import org.hibernate.boot.registry.*;
 public class PersistenceSessionFactory {
 
     public SessionFactory sessionFactory;
-    protected void setUp() {
+    public void setUp() {
         // A SessionFactory is set up once for an application!
         final StandardServiceRegistry registry =
                 new StandardServiceRegistryBuilder()
@@ -26,7 +26,7 @@ public class PersistenceSessionFactory {
             // The registry would be destroyed by the SessionFactory, but we
             // had trouble building the SessionFactory so destroy it manually.
             StandardServiceRegistryBuilder.destroy(registry);
-            System.out.println("this is f up");
+            System.out.println("\n\nError: Couldn't build the metadata.");
         }
     }
 
