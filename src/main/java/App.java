@@ -1,9 +1,11 @@
 import Services.*;
 
 import java.util.List;
+import java.util.Scanner;
 
 
 public class App {
+    public static Scanner inputScaner = new Scanner(System.in);
     public static void main (String[] args) {
 
         StorageService storageService = new StorageService();
@@ -18,7 +20,7 @@ public class App {
                             "\tq) Quit.\n\n"
             );
 
-            String selection = System.console().readLine();
+            String selection = inputScaner.nextLine();
 
             if (selection.equals("d")) {
                 promptDepartment(storageService);
@@ -42,7 +44,8 @@ public class App {
                             "\t\tb) Back.\n\n"
             );
 
-            String selection = System.console().readLine();
+
+            String selection = inputScaner.nextLine();
 
             if(selection.equals("r"))
                 readDepartmentEvent(departmentService);
@@ -59,13 +62,13 @@ public class App {
 
     public static void readDepartmentEvent(DepartmentService dpmntService){
         System.out.println("\tInsert the department identificator:\n");
-        String identificator = System.console().readLine();
+        String identificator = inputScaner.nextLine();
         List<DepartmentResponseService> dpmntResponse = dpmntService.getAll();
         dpmntResponse.forEach(DepartmentResponseService::print);
     }
 
     public static void createDepartmentEvent(DepartmentService dpmntService){
-        String dpmnt = System.console().readLine();
+        String dpmnt = inputScaner.nextLine();
         DepartmentResponseService dpmntResult = dpmntService.create(dpmnt);
         dpmntResult.print();
     }

@@ -32,7 +32,7 @@ public class DepartmentPersistence{
 
         try (Session session = storage.persistence.sessionFactory.openSession()) {
             session.getTransaction().begin();
-            List<Department> result = session.createQuery("select * from department", Department.class).getResultList();
+            List<Department> result = session.createQuery("from Department", Department.class).getResultList();
             session.getTransaction().commit();
 
             DepartmentResponseService response[] = new DepartmentResponseService[result.size()];
