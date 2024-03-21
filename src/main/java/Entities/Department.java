@@ -18,7 +18,6 @@ public class Department {
     }
 
     public Department(String dName, int dId){
-
         name = dName;
         id = dId;
     }

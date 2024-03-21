@@ -1,7 +1,7 @@
 package Services;
 
 import Persistence.DepartmentPersistence;
-import org.hibernate.SessionFactory;
+import Persistence.DepartmentResponse;
 
 import java.util.List;
 
@@ -12,10 +12,18 @@ public class DepartmentService {
     }
 
     public DepartmentResponseService create (String name ) {
-        return DepartmentPersistence.create(name, storageSession);
+        return new DepartmentResponseService(DepartmentPersistence.create(name, storageSession));
     }
 
     public List<DepartmentResponseService> getAll () {
-        return DepartmentPersistence.getAll(storageSession);
+        List<DepartmentResponse> answer = DepartmentPersistence.getAll(storageSession);
+        List<DepartmentResponseService> response[]=  new DepartmentResponseService[answer.size()];
+
+
+        answer.forEach(dpmnt -> {
+            ((List<DepartmentResponseService>[]) response).add(new DepartmentResponseService(dpmnt));
+        });
+
+        return response;
     }
 }

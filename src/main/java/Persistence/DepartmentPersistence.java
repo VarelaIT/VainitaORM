@@ -1,33 +1,29 @@
 package Persistence;
 
 import Entities.Department;
-import Services.DepartmentResponseService;
 import Services.StorageService;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.util.List;
 
 public class DepartmentPersistence{
 
-    public static DepartmentResponseService create (String name, StorageService storage){
+    public static DepartmentResponse create (String name, StorageService storage){
 
         Department newDpmnt = new Department(name);
 
-        try(Session session = storage.persistence.sessionFactory.openSession()) {
+        try (Session session = storage.persistence.sessionFactory.openSession()) {
             session.getTransaction().begin();
-            //Transaction algo = session.getTransaction();
-            //algo.begin();
             session.persist(newDpmnt);
-            //algo.commit();
             session.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println("\n* Error: Could not create resource. " + e.getMessage());
         }
 
-        return new DepartmentResponseService(newDpmnt);
+        return new DepartmentResponse(newDpmnt);
     }
 
-    public static List<DepartmentResponseService> getAll (StorageService storage){
+    public static List<DepartmentResponse> getAll (StorageService storage) {
 
 
         try (Session session = storage.persistence.sessionFactory.openSession()) {
@@ -35,15 +31,20 @@ public class DepartmentPersistence{
             List<Department> result = session.createQuery("from Department", Department.class).getResultList();
             session.getTransaction().commit();
 
-            DepartmentResponseService response[] = new DepartmentResponseService[result.size()];
+            DepartmentResponse response[] = new DepartmentResponse[result.size()];
             int i = 0;
 
             for (Department department : result) {
-                response[i] = new DepartmentResponseService(department);
+                response[i] = new DepartmentResponse(department);
                 i++;
             }
 
             return List.of(response);
+        } catch (Exception e) {
+            System.out.println("\n* Error: The Storage service couldn't initialized.\n\t" + e.getMessage());
+            System.exit(-1);
         }
+
+        return null;
     }
 }

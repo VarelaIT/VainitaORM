@@ -1,8 +1,5 @@
 package Persistence;
 
-import Entities.Department;
-import Entities.Employ;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.*;
@@ -27,6 +24,7 @@ public class PersistenceSessionFactory {
             // had trouble building the SessionFactory so destroy it manually.
             StandardServiceRegistryBuilder.destroy(registry);
             System.out.println("\n\nError: Couldn't build the metadata.");
+            System.exit(-1);
         }
     }
 
