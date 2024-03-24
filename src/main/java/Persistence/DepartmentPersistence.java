@@ -6,9 +6,9 @@ import org.hibernate.Session;
 
 import java.util.List;
 
-public class DepartmentPersistence{
+public class DepartmentPersistence implements IDeparmentPersistence{
 
-    public static DepartmentResponse create (String name, StorageService storage){
+    public DepartmentResponse create (String name, StorageService storage){
 
         Department newDpmnt = new Department(name);
 
@@ -23,7 +23,8 @@ public class DepartmentPersistence{
         return new DepartmentResponse(newDpmnt);
     }
 
-    public static List<DepartmentResponse> getAll (StorageService storage) {
+
+    public List<DepartmentResponse> getAll (StorageService storage) {
 
 
         try (Session session = storage.persistence.sessionFactory.openSession()) {
