@@ -1,16 +1,17 @@
 package Persistence;
 
+import Entities.AbstractDepartment;
 import Entities.Department;
 import Services.StorageService;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class DepartmentPersistence implements IDeparmentPersistence{
+public class DepartmentPersistence {
 
-    public DepartmentResponse create (String name, StorageService storage){
+    public static DepartmentResponse create (String name, StorageService storage){
 
-        Department newDpmnt = new Department(name);
+        AbstractDepartment newDpmnt = new Department(name);
 
         try (Session session = storage.persistence.sessionFactory.openSession()) {
             session.getTransaction().begin();
@@ -24,18 +25,17 @@ public class DepartmentPersistence implements IDeparmentPersistence{
     }
 
 
-    public List<DepartmentResponse> getAll (StorageService storage) {
+    public static List<DepartmentResponse> getAll (StorageService storage) {
 
-
-        try (Session session = storage.persistence.sessionFactory.openSession()) {
+        try(var session = storage.persistence.sessionFactory.openSession()){
             session.getTransaction().begin();
-            List<Department> result = session.createQuery("from Department", Department.class).getResultList();
+            List<AbstractDepartment> result = session.createQuery("from Department", AbstractDepartment.class).getResultList();
             session.getTransaction().commit();
 
             DepartmentResponse response[] = new DepartmentResponse[result.size()];
             int i = 0;
 
-            for (Department department : result) {
+            for (AbstractDepartment department : result) {
                 response[i] = new DepartmentResponse(department);
                 i++;
             }

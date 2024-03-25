@@ -1,5 +1,6 @@
 package Services;
 
+import Entities.AbstractDepartment;
 import Persistence.DepartmentPersistence;
 import Persistence.DepartmentResponse;
 
@@ -16,14 +17,15 @@ public class DepartmentService {
     }
 
     public List<DepartmentResponseService> getAll () {
-        List<DepartmentResponse> answer = DepartmentPersistence.getAll(storageSession);
-        List<DepartmentResponseService> response[]=  new DepartmentResponseService[answer.size()];
+        var result = DepartmentPersistence.getAll(storageSession);
+        DepartmentResponseService response[] = new DepartmentResponseService[result.size()];
+        int i = 0;
 
+        for (var department : result) {
+            response[i] = new DepartmentResponseService(department);
+            i++;
+        }
 
-        answer.forEach(dpmnt -> {
-            ((List<DepartmentResponseService>[]) response).add(new DepartmentResponseService(dpmnt));
-        });
-
-        return response;
+        return List.of(response);
     }
 }

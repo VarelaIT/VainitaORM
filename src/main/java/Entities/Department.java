@@ -3,7 +3,7 @@ package Entities;
 import jakarta.persistence.*;
 
 @Entity
-public class Department {
+public class Department extends AbstractDepartment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     public int id;

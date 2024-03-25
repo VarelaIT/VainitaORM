@@ -63,13 +63,14 @@ public class App {
     }
 
     public static void readDepartmentEvent(DepartmentService dpmntService){
-        System.out.println("\tInsert the department identificator:\n");
+        System.out.println("\nInsert the department identificator:");
         String identificator = inputScaner.nextLine();
-        List<DepartmentResponseService> dpmntResponse = dpmntService.getAll();
+        var dpmntResponse = dpmntService.getAll();
         dpmntResponse.forEach(DepartmentResponseService::print);
     }
 
     public static void createDepartmentEvent(DepartmentService dpmntService){
+        System.out.println("\nInsert the deparment Name:");
         String dpmnt = inputScaner.nextLine();
         DepartmentResponseService dpmntResult = dpmntService.create(dpmnt);
         dpmntResult.print();
